@@ -10,7 +10,7 @@ algo = Algorithm()
 def generate(count):
     population = []
     for x in range(count):
-        population.append(random.randint(0, max_grade + 1))
+        population.append(random.randint(0, max_grade))
 
     population = list(map(lambda test_result: Child(test_result), population))
 

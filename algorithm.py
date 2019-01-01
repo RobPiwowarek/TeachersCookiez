@@ -47,14 +47,14 @@ class Algorithm:
 
 
     def add_or_remove_cookie(self, cookies):
-        if (random.randint(0, 2) == 1):
+        if (random.randint(0, 1) == 1):
             return cookies - 1
         else:
             return cookies + 1
 
     def mutate(self, children):
         for child in children:
-             rolled_value = random.randint(0, 101)
+             rolled_value = random.randint(0, 100)
              if (rolled_value <= self.base_mutation_chance):
                  child.cookiez = self.add_or_remove_cookie(child.cookiez)
 
@@ -63,7 +63,7 @@ class Algorithm:
     def mutate_with_decreasing_chance(self, children):
         chance = self.base_mutation_chance
         for child in children:
-            rolled_value = random.randint(0, 101)
+            rolled_value = random.randint(0, 100)
             if (rolled_value <= chance):
                 child.cookiez = self.add_or_remove_cookie(child.cookiez)
                 chance = chance/2
