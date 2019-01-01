@@ -1,7 +1,10 @@
 import random
+import crossover
+import selection
 
 class Algorithm:
     base_mutation_chance = 20
+    punishment_factor = 11
 
     def calculate_optimal(self, children):
         current_cookie = 1
@@ -67,3 +70,27 @@ class Algorithm:
             if (rolled_value <= chance):
                 child.cookiez = self.add_or_remove_cookie(child.cookiez)
                 chance = chance/2
+                
+    def get_fitness(self, children):
+        cookie_sum = sum(child.cookiez for child in children)
+        bad_pos_count = 0
+        for i in range(1, len(children)):
+            child1 = children[i-1]
+            child2 = children[i]
+            if child1.testResult < child2.testResult:
+                if child1.cookiez >= child2.cookiez:
+                    bad_pos_count += 1
+            elif child1.testResult > child2.testResult:
+                if child1.cookiez <= child2.cookiez:
+                    bad_pos_count += 1
+            elif child1.cookiez < 1:
+                bad_pos_count += 1
+        
+        return cookie_sum + bad_pos_count * self.punishment_factor
+    
+    def crossover(self, children1, children2):
+        return crossover.equal(children1, children2)
+    
+    def select_k(self, population, k):
+        return selection.k_best(population, k, self.get_fitness)
+        
