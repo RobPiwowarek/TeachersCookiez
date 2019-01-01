@@ -5,6 +5,7 @@ import random
 max_grade = 10
 algo = Algorithm()
 
+
 # generate in the format number number number ....
 def generate(count):
     population = []
@@ -34,7 +35,7 @@ def save(file_name, result):
 
 
 def save_with_optimal(file_name, result, optimal_result):
-    file = open(file_name)
+    file = open(file_name, "w")
     for child in result:
         file.write(str(child.testResult) + " ")
 
@@ -44,3 +45,52 @@ def save_with_optimal(file_name, result, optimal_result):
         file.write(str(child.testResult) + " ")
     file.write("\n")
     file.close()
+
+
+def load(file_name):
+    with open(file_name, "r") as file:
+        for line in file:
+            values = line.split(' ')
+            file.close()
+            return list(map(lambda value: Child(int(value)), values))
+
+
+def load_with_optimal(file_name):
+    with open(file_name, "r") as file:
+        for line in file:
+            results = line.split(':')
+            generated = results[0].split(' ')
+            optimal = results[1].split(' ')
+
+            generated = list(map(lambda value: Child(int(value)), generated))
+            optimal = list(map(lambda value: Child(int(value)), optimal))
+            file.close()
+            return (generated, optimal)
+
+def load_multiple(file_name):
+    generated_populations = []
+
+    with open(file_name, "r") as file:
+        for line in file:
+            values = line.split(' ')
+            generated_populations.append(list(map(lambda value: Child(int(value)), values)))
+
+    file.close()
+    return generated_populations
+
+def load_multiple_with_optimal(file_name):
+    generated_populations = []
+
+    with open(file_name, "r") as file:
+        for line in file:
+            results = line.split(':')
+            generated = results[0].split(' ')
+            optimal = results[1].split(' ')
+
+            generated = list(map(lambda value: Child(int(value)), generated))
+            optimal = list(map(lambda value: Child(int(value)), optimal))
+
+            generated_populations.append((generated, optimal))
+
+    file.close()
+    return generated_populations
