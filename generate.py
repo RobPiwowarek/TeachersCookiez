@@ -3,94 +3,51 @@ from child import Child
 import random
 
 max_grade = 10
+max_cookiez = 11
 algo = Algorithm()
 
-
-# generate in the format number number number ....
 def generate(count):
-    population = []
+    results = []
+    cookiez = []
+
     for x in range(count):
-        population.append(random.randint(0, max_grade))
+        results.append(random.randint(0, max_grade))
+        cookiez.append(random.randint(0, max_cookiez))
 
-    population = list(map(lambda test_result: Child(test_result), population))
+    zipped = zip(results, cookiez)
+    zipped = list(map(lambda result, cookie: Child(int(result), int(cookie)), zipped))
 
-    return population
+    return zipped
 
+# array of ints
+def generate_tests_results_only(count):
+    results = []
 
-# generate in the format number, number, number : number number number ...
-# corresponding to generated : optimal
-def generate_to_file_with_optimal(count, file_name):
-    population = generate(count)
-    optimal = algo.calculate_optimal(population)
+    for x in range(count):
+        results.append(random.randint(0, max_grade))
 
-    save_with_optimal(file_name, population, optimal)
-
-
-def save(file_name, result):
-    file = open(file_name, "w")
-    for child in result:
-        file.write(str(child.testResult) + " ")
-    file.write("\n")
-    file.close()
+    return results
 
 
-def save_with_optimal(file_name, result, optimal_result):
-    file = open(file_name, "w")
-    for child in result:
-        file.write(str(child.testResult) + " ")
+def generate_cookiez_only(count):
+    cookiez = []
 
-    file.write(": ")
+    for x in range(count):
+        cookiez.append(random.randint(0, max_cookiez))
 
-    for child in optimal_result:
-        file.write(str(child.testResult) + " ")
-    file.write("\n")
-    file.close()
+    return cookiez
 
+def generate_cookiez_for_test_results(test_results):
+    cookiez = generate_cookiez_only(len(test_results))
 
-def load(file_name):
-    with open(file_name, "r") as file:
-        for line in file:
-            values = line.split(' ')
-            file.close()
-            return list(map(lambda value: Child(int(value)), values))
+    zipped = zip(test_results, cookiez)
+    zipped = list(map(lambda result, cookie: Child(int(result), int(cookie)), zipped))
 
-
-def load_with_optimal(file_name):
-    with open(file_name, "r") as file:
-        for line in file:
-            results = line.split(':')
-            generated = results[0].split(' ')
-            optimal = results[1].split(' ')
-
-            generated = list(map(lambda value: Child(int(value)), generated))
-            optimal = list(map(lambda value: Child(int(value)), optimal))
-            file.close()
-            return (generated, optimal)
-
-def load_multiple(file_name):
-    generated_populations = []
-
-    with open(file_name, "r") as file:
-        for line in file:
-            values = line.split(' ')
-            generated_populations.append(list(map(lambda value: Child(int(value)), values)))
-
-    file.close()
-    return generated_populations
-
-def load_multiple_with_optimal(file_name):
-    generated_populations = []
-
-    with open(file_name, "r") as file:
-        for line in file:
-            results = line.split(':')
-            generated = results[0].split(' ')
-            optimal = results[1].split(' ')
-
-            generated = list(map(lambda value: Child(int(value)), generated))
-            optimal = list(map(lambda value: Child(int(value)), optimal))
-
-            generated_populations.append((generated, optimal))
-
-    file.close()
-    return generated_populations
+    return zipped
+# generowanie pierwszej populacji ciastek u dzieci wywolanie z rezultami i dziecmi
+# load cookiez not results
+# cos co wywola robienei dzieci
+# kryterium stop
+# mierzenie czasu benchmark
+# rozne parametry
+# nie saveujemy loadujemy do pliku.
