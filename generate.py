@@ -44,10 +44,8 @@ def generate_cookiez_for_test_results(test_results):
     zipped = list(map(lambda result, cookie: Child(int(result), int(cookie)), zipped))
 
     return zipped
-# generowanie pierwszej populacji ciastek u dzieci wywolanie z rezultami i dziecmi
-# load cookiez not results
+
 # cos co wywola robienei dzieci
 # kryterium stop
 # mierzenie czasu benchmark
 # rozne parametry
-# nie saveujemy loadujemy do pliku.
