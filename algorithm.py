@@ -80,6 +80,11 @@ class Algorithm:
             if (rolled_value <= chance):
                 child.cookiez = self.add_or_remove_cookie(child.cookiez)
                 chance = chance/2
+
+    #mutation is a function
+    def mutate_population(self, population, mutation):
+        mutated = list(map(lambda children: mutation(children), population))
+        return mutated
                 
     def get_fitness(self, children):
         cookie_sum = sum(child.cookiez for child in children)
@@ -107,7 +112,7 @@ class Algorithm:
             random_pair = random.choices(population, k = 2)
             yield crossover(random_pair[0], random_pair[1])
 
-    def select_k_best(self, population, k)
+    def select_k_best(self, population, k):
         return selection.k_best(population, k, self.get_fitness)
 
     def select_weighted(self, population, k):
