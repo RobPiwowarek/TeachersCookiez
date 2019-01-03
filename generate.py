@@ -1,10 +1,8 @@
-from algorithm import Algorithm
 from child import Child
 import random
 
 max_grade = 10
 max_cookiez = 11
-algo = Algorithm()
 
 def generate(count):
     results = []

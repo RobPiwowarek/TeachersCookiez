@@ -1,6 +1,7 @@
 import random
 import crossover
 import selection
+from child import Child
 
 class Algorithm:
     base_mutation_chance = 20
@@ -40,6 +41,12 @@ class Algorithm:
             i = i - 1
 
         return children
+
+    def calculate_optimal_for_test_results(self, test_results):
+        children = list(map(lambda result: Child(result), test_results))
+        optimal = self.calculate_optimal(children)
+        optimal = list(map(lambda child: child.cookiez, optimal))
+        return optimal
 
     def print_optimal(self, children):
         result = self.calculate_optimal(children)
