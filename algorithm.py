@@ -1,11 +1,14 @@
 import random
 import crossover
 import selection
+import itertools
 from child import Child
 
 class Algorithm:
     base_mutation_chance = 20
     punishment_factor = 11
+    selection_size = 25
+    breeding_size = 25
 
     def calculate_optimal(self, children):
         current_cookie = 1
@@ -95,9 +98,18 @@ class Algorithm:
         
         return cookie_sum + bad_pos_count * self.punishment_factor
     
-    def crossover(self, children1, children2):
-        return crossover.equal(children1, children2)
+    def all_with_all_breeding(self, population, crossover):
+        for pair in itertools.combinations(population, 2):
+            yield crossover(pair[0], pair[1])
     
-    def select_k(self, population, k):
+    def random_breeding(self, population, how_many_children, crossover):
+        for i in range(how_many_children):
+            random_pair = random.choices(population, k = 2)
+            yield crossover(random_pair[0], random_pair[1])
+
+    def select_k_best(self, population, k)
         return selection.k_best(population, k, self.get_fitness)
-        
+
+    def select_weighted(self, population, k):
+        return selection.weighted(population, k, self.get_fitness)
+
