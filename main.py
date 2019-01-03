@@ -56,5 +56,5 @@ while generation_counter < max_generations:
 
 if generation_counter >= max_generations:
     best_children = population[0]
-    
+
 print(best_children) #todo better print
