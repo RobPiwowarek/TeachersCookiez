@@ -10,7 +10,7 @@ algo = Algorithm()
 
 population_count = 50
 children_count = 50
-k = population_count / 2
+k = population_count // 2
 
 #
 
@@ -38,8 +38,7 @@ while generation_counter < max_generations:
     chosen_ones = algo.select_k_best(population, k)
 
     # evaluation & stop cryterium TODO: save result
-    cookie_distribution = list(map(lambda child: child.cookiez, chosen_ones[0]))
-    if cookie_distribution == optimal_cookiez_distribution:
+    if algo.get_fitness(chosen_ones[0]) == algo.get_fitness(optimal_cookiez_distribution):
         break
 
     # crossover
