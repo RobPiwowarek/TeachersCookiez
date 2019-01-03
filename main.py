@@ -39,6 +39,7 @@ while generation_counter < max_generations:
 
     # evaluation & stop cryterium TODO: save result
     if algo.get_fitness(chosen_ones[0]) == algo.get_fitness(optimal_cookiez_distribution):
+        best_children = chosen_ones[0]
         break
 
     # crossover
@@ -49,6 +50,11 @@ while generation_counter < max_generations:
     population = list(chosen_ones) + list(breed_ones)
 
     # mutation
-    algo.mutate_population(population, algo.mutate)
+    population = algo.mutate_population(population, algo.mutate)
 
     generation_counter += 1
+
+if generation_counter >= max_generations:
+    best_children = population[0]
+    
+print(best_children) #todo better print
