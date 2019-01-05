@@ -27,6 +27,8 @@ max_generations = 1000
 
 optimal_cookiez_distribution = algo.calculate_optimal_for_test_results(test_results)
 
+optimal_children = list(map(lambda tuple: Child(tuple[0], tuple[1]), zip(test_results, optimal_cookiez_distribution)))
+
 #
 
 
@@ -37,8 +39,9 @@ while generation_counter < max_generations:
     # selection
     chosen_ones = algo.select_k_best(population, k)
 
+    print("gen: " + str(generation_counter) + " fitness: " + str(algo.get_fitness(chosen_ones[0])))
     # evaluation & stop cryterium TODO: save result
-    if algo.get_fitness(chosen_ones[0]) == algo.get_fitness(optimal_cookiez_distribution):
+    if algo.get_fitness(chosen_ones[0]) == algo.get_fitness(optimal_children):
         best_children = chosen_ones[0]
         break
 
@@ -57,4 +60,10 @@ while generation_counter < max_generations:
 if generation_counter >= max_generations:
     best_children = population[0]
 
-print(best_children) #todo better print
+print("generation counter = " + str(generation_counter))
+print("fitness: " + str(algo.get_fitness(best_children)))
+print("optimal fitness: " + str(algo.get_fitness(optimal_children)))
+
+print("cookiez : results")
+for child in best_children:
+    print(str(child.cookiez) + " : " + str(child.testResult))

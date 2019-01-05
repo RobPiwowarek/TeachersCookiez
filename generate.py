@@ -39,7 +39,7 @@ def generate_cookiez_for_test_results(test_results):
     cookiez = generate_cookiez_only(len(test_results))
 
     zipped = zip(test_results, cookiez)
-    zipped = list(map(lambda result, cookie: Child(int(result), int(cookie)), zipped))
+    zipped = list(map(lambda tuple: Child(int(tuple[0]), int(tuple[1])), zipped))
 
     return zipped
 
