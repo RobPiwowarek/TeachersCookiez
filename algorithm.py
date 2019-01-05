@@ -5,10 +5,8 @@ import itertools
 from child import Child
 
 class Algorithm:
-    base_mutation_chance = 20
+    base_mutation_chance = 35
     punishment_factor = 11
-    selection_size = 25
-    breeding_size = 25
 
     def calculate_optimal(self, children):
         current_cookie = 1
@@ -65,25 +63,25 @@ class Algorithm:
         else:
             return cookies + 1
 
-    def mutate(self, children):
+    def mutate(self, children, chance):
         for child in children:
              rolled_value = random.randint(0, 100)
-             if (rolled_value <= self.base_mutation_chance):
+             if (rolled_value <= chance):
                  child.cookiez = self.add_or_remove_cookie(child.cookiez)
 
         return children
 
-    def mutate_with_decreasing_chance(self, children):
-        chance = self.base_mutation_chance
+    def mutate_with_decreasing_chance(self, children, chance):
+        chance2 = chance
         for child in children:
             rolled_value = random.randint(0, 100)
-            if (rolled_value <= chance):
+            if (rolled_value <= chance2):
                 child.cookiez = self.add_or_remove_cookie(child.cookiez)
-                chance = chance/2
+                chance2 = chance2/2
 
     #mutation is a function
-    def mutate_population(self, population, mutation):
-        mutated = list(map(lambda children: mutation(children), population))
+    def mutate_population(self, population, mutation, chance = base_mutation_chance):
+        mutated = list(map(lambda children: mutation(children, chance), population))
         return mutated
                 
     def get_fitness(self, children):

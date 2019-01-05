@@ -2,26 +2,19 @@ from algorithm import Algorithm
 from crossover import *
 from generate import *
 
-algo = Algorithm()
-
-#
-
-population_count = 50
+# stop iterating at max generations or at being in the optimal
+max_generations = 100000
+mutation_chance = 20
+population_count = 64
 children_count = 50
-k = population_count // 2
+elitism_factor = 0.25
 
-#
-
+k = int(population_count * elitism_factor)
+algo = Algorithm()
 test_results = generate_tests_results_only(children_count)
-
-#
-
 base_population = []
 for x in range(population_count):
     base_population.append(generate_cookiez_for_test_results(test_results))
-
-# stop iterating at max generations or at being in the optimal
-max_generations = 1000
 
 optimal_cookiez_distribution = algo.calculate_optimal_for_test_results(test_results)
 
@@ -46,10 +39,9 @@ while generation_counter < max_generations:
     # crossover
     breed_ones = algo.random_breeding(chosen_ones, population_count - k, equal)
     # mutation
-    breed_ones = algo.mutate_population(breed_ones, algo.mutate)
+    breed_ones = algo.mutate_population(breed_ones, algo.mutate, mutation_chance)
 
     # new population
-
     population = list(chosen_ones) + list(breed_ones)
 
     generation_counter += 1
