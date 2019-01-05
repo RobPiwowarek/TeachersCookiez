@@ -1,4 +1,5 @@
 import random
+from child import Child
 
 def base_crossover(genome1, genome2, weights):
     """
@@ -16,8 +17,8 @@ def base_crossover(genome1, genome2, weights):
     for i in range(len(genome1)):
         parent1 = genome1[i]
         parent2 = genome2[i]
-        child = random.choices(population = (parent1, parent2), weights = weights, k = 1) # python 3.6+
-        result.append(child[0])
+        child = random.choices(population = (parent1, parent2), weights = weights, k = 1)[0] # python 3.6+
+        result.append(Child(child.testResult, child.cookiez))
     
     return result
 

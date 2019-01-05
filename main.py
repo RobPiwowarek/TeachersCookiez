@@ -1,8 +1,6 @@
 from algorithm import Algorithm
-from child import Child
-from generate import *
-from selection import *
 from crossover import *
+from generate import *
 
 algo = Algorithm()
 
@@ -47,13 +45,12 @@ while generation_counter < max_generations:
 
     # crossover
     breed_ones = algo.random_breeding(chosen_ones, population_count - k, equal)
+    # mutation
+    breed_ones = algo.mutate_population(breed_ones, algo.mutate)
 
     # new population
 
     population = list(chosen_ones) + list(breed_ones)
-
-    # mutation
-    population = algo.mutate_population(population, algo.mutate)
 
     generation_counter += 1
 

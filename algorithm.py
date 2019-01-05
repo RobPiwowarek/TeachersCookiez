@@ -98,8 +98,8 @@ class Algorithm:
             elif child1.testResult > child2.testResult:
                 if child1.cookiez <= child2.cookiez:
                     bad_pos_count += 1
-            elif child1.cookiez < 1:
-                bad_pos_count += 1
+            if child1.cookiez < 1:
+                bad_pos_count += 1 # double punishment for < 1 cookies
         if children[-1].cookiez < 1:
             bad_pos_count += 1
         
