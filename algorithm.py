@@ -87,7 +87,7 @@ class Algorithm:
         return mutated
                 
     def get_fitness(self, children):
-        cookie_sum = sum(child.cookiez for child in children)
+        cookie_sum = sum(abs(child.cookiez) for child in children)
         bad_pos_count = 0
         for i in range(1, len(children)):
             child1 = children[i-1]
@@ -100,6 +100,8 @@ class Algorithm:
                     bad_pos_count += 1
             elif child1.cookiez < 1:
                 bad_pos_count += 1
+        if children[-1].cookiez < 1:
+            bad_pos_count += 1
         
         return cookie_sum + bad_pos_count * self.punishment_factor
     
