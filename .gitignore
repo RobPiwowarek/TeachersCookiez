@@ -124,6 +124,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-# kate
-.*kate-swp
