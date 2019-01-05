@@ -5,7 +5,7 @@ import itertools
 from child import Child
 
 class Algorithm:
-    base_mutation_chance = 20
+    base_mutation_chance = 10
     punishment_factor = 11
     selection_size = 25
     breeding_size = 25
@@ -67,10 +67,13 @@ class Algorithm:
 
     def mutate(self, children):
         for child in children:
-             rolled_value = random.randint(0, 100)
-             if (rolled_value <= self.base_mutation_chance):
-                 child.cookiez = self.add_or_remove_cookie(child.cookiez)
-
+            # print("got child: " + str(child))
+            rolled_value = random.randint(0, 100)
+            if (rolled_value <= self.base_mutation_chance):
+                child.cookiez = self.add_or_remove_cookie(child.cookiez)
+                # print("mutated to: " + str(child))
+            # else:
+            # print("did not mutate")
         return children
 
     def mutate_with_decreasing_chance(self, children):
@@ -85,7 +88,7 @@ class Algorithm:
     def mutate_population(self, population, mutation):
         mutated = list(map(lambda children: mutation(children), population))
         return mutated
-                
+
     def get_fitness(self, children):
         cookie_sum = sum(abs(child.cookiez) for child in children)
         bad_pos_count = 0
@@ -98,17 +101,17 @@ class Algorithm:
             elif child1.testResult > child2.testResult:
                 if child1.cookiez <= child2.cookiez:
                     bad_pos_count += 1
-            elif child1.cookiez < 1:
-                bad_pos_count += 1
+            if child1.cookiez < 1:
+                bad_pos_count += 1 # double punishment for invalid cookies
         if children[-1].cookiez < 1:
             bad_pos_count += 1
-        
+
         return cookie_sum + bad_pos_count * self.punishment_factor
-    
+
     def all_with_all_breeding(self, population, crossover):
         for pair in itertools.combinations(population, 2):
             yield crossover(pair[0], pair[1])
-    
+
     def random_breeding(self, population, how_many_children, crossover):
         for i in range(how_many_children):
             random_pair = random.choices(population, k = 2)
