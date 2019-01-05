@@ -19,6 +19,7 @@ def generate(count):
 
 # array of ints
 def generate_tests_results_only(count):
+    random.seed(0)
     results = []
 
     for x in range(count):
