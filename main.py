@@ -4,6 +4,18 @@ import sys
 from generate import *
 import logging
 
+def calculate_times_for_ranges(children_count_range, mutation_range, population_range, elitism_range):
+    logging.basicConfig(filename="cookies-%s.log" % datetime.now(), level=logging.DEBUG)
+    print("children;mutation_chance;population_count;elitism_factor;generations_at_end;best_fitness;time")
+    for chld_cnt in children_count_range:
+        for mut_chnc in mutation_range:
+            for pop_cnt in population_range:
+                for elitism in elitism_range:
+                    max_gen = 20000
+                    starttime = datetime.now()
+                    best_children, best_fitness, generation = calculate(chld_cnt, max_gen, mut_chnc, pop_cnt, elitism)
+                    endtime = datetime.now()
+                    print("%d;%d;%d;%d;%d;%d;%s" % (chld_cnt, mut_chnc, pop_cnt, elitism, generation, best_fitness, endtime - starttime))
 
 def calculate(children_count, max_generations, mutation_chance, population_count, elitism_factor):
     random.seed(32768)
