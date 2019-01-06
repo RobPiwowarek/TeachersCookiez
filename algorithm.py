@@ -1,5 +1,5 @@
 import itertools
-from logging import Logger
+import logging
 
 import selection
 import crossover
@@ -9,7 +9,6 @@ from generate import *
 class Algorithm:
     base_mutation_chance = 35
     punishment_factor = 11
-    logger = Logger("Algorithm")
 
     def __init__(self, crossover_method, breeding_method, mutation_method, selection_method):
         self.crossover = crossover_method
@@ -39,7 +38,7 @@ class Algorithm:
             # best in population
             best_children = self.select_k_best(population, 1)[0]
             best_fitness = self.get_fitness(best_children)
-            self.logger.info("gen: %d best fitness: %d", (generation_counter, best_fitness))
+            logging.info("gen: %d best fitness: %d", generation_counter, best_fitness)
             # stop criterion
             if best_fitness == optimal_fitness:
                 break
@@ -56,9 +55,11 @@ class Algorithm:
             population = list(chosen_ones) + list(breed_ones)
             generation_counter += 1
 
-        self.logger.info("finished at generation: %d", generation_counter)
-        self.logger.info("fitness: %d", best_fitness)
-        self.logger.info("optimal fitness: %d", optimal_fitness)
+        logging.info("finished at generation: %d", generation_counter)
+        logging.info("fitness: %d", best_fitness)
+        logging.info("optimal fitness: %d", optimal_fitness)
+        logging.info("test results: %s", test_results)
+        logging.info("best cookie assignment: %s", [child.cookiez for child in best_children])
 
         return best_children, best_fitness
 

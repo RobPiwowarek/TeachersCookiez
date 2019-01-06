@@ -2,6 +2,7 @@ from datetime import datetime
 from algorithm import Algorithm
 import sys
 from generate import *
+import logging
 
 if __name__ == '__main__':
     # max_generations = 1000
@@ -13,6 +14,8 @@ if __name__ == '__main__':
         print("Usage: ./main children_count max_generations mutation_chance population_count elitism_factor")
         sys.exit(1)
 
+    logging.basicConfig(filename="cookies-%s.log" % datetime.now(), level=logging.DEBUG)
+
     children_count, max_generations, mutation_chance, population_count, elitism_factor = (int(x) for x in sys.argv[1:])
 
     random.seed(32768)
@@ -22,18 +25,16 @@ if __name__ == '__main__':
                      crossover_method=Algorithm.equal_crossover,
                      selection_method=Algorithm.select_k_best)
 
-    algo.logger.setLevel("INFO")
-
     test_results = generate_tests_results_only(children_count)
 
-    # time start
-    tstart = datetime.now()
+    # # time start
+    # tstart = datetime.now()
 
     calculated_children, calculated_fitness = algo.calculate_genetic(test_results,
                                                                      max_generations,
                                                                      mutation_chance,
                                                                      population_count,
                                                                      1/elitism_factor)
-    # time end
-    tend = datetime.now()
-    print(str(tend - tstart))
+    # # time end
+    # tend = datetime.now()
+    # print(str(tend - tstart))
