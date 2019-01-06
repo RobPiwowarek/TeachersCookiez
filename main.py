@@ -10,7 +10,7 @@ if __name__ == '__main__':
     # population_count = 64
     # elitism_factor = 0.25
     # children_count = 50
-    if len(sys.argv[1:]) != 5:
+    if len(sys.argv[1:]) < 5:
         print("Usage: ./main children_count max_generations mutation_chance population_count elitism_factor")
         sys.exit(1)
 
