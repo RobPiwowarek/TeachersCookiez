@@ -61,7 +61,7 @@ class Algorithm:
         logging.info("test results: %s", test_results)
         logging.info("best cookie assignment: %s", [child.cookiez for child in best_children])
 
-        return best_children, best_fitness
+        return best_children, best_fitness, generation_counter
 
     @staticmethod
     def calculate_optimal(children):
