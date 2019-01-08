@@ -12,7 +12,7 @@ def calculate_times_for_ranges(children_count_range, mutation_range, population_
         for mut_chnc in mutation_range:
             for pop_cnt in population_range:
                 for elitism in elitism_range:
-                    max_gen = 20000
+                    max_gen = 10000
                     starttime = datetime.now()
                     best_children, best_fitness, generation = calculate(test_res, chld_cnt, max_gen, mut_chnc, pop_cnt, elitism)
                     endtime = datetime.now()
