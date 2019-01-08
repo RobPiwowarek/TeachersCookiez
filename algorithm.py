@@ -17,7 +17,7 @@ class Algorithm:
         self.breeding = breeding_method
 
     def calculate_genetic(self, test_results, max_generations=100000, mutation_chance=20, population_count=64,
-                          elitism_factor=0.25):
+                          elitism_factor=0.25, max_same_fitness = 1000):
         k = int(population_count * elitism_factor)
 
         base_population = []
@@ -30,11 +30,13 @@ class Algorithm:
         optimal_fitness = self.get_fitness(optimal_children)
         #
         generation_counter = 0
+        same_fitness_counter = 0
         population = base_population
         best_children = []
         best_fitness = -1
+        prev_fitness = -1
 
-        while generation_counter < max_generations:
+        while generation_counter < max_generations and same_fitness_counter < max_same_fitness:
             # best in population
             best_children = self.select_k_best(population, 1)[0]
             best_fitness = self.get_fitness(best_children)
@@ -42,6 +44,11 @@ class Algorithm:
             # stop criterion
             if best_fitness == optimal_fitness:
                 break
+            if best_fitness == prev_fitness:
+                same_fitness_counter += 1
+            else:
+                same_fitness_counter = 0
+                prev_fitness = best_fitness
 
             # selection
             chosen_ones = self.selection(self, population, k)
