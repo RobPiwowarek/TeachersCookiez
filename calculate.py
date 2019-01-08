@@ -22,7 +22,6 @@ def calculate_times_for_ranges(children_count_range, mutation_range, population_
                         f.write("%d;%d;%d;%d;%d;%d;%s\n" % (chld_cnt, mut_chnc, pop_cnt, elitism, generation, best_fitness, endtime - starttime))
 
 def calculate(test_results, children_count, max_generations, mutation_chance, population_count, elitism_factor):
-    random.seed(32768)
 
     algo = Algorithm(breeding_method=Algorithm.random_breeding,
                      mutation_method=Algorithm.mutate,
